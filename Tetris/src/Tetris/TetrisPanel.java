@@ -34,24 +34,17 @@ public class TetrisPanel extends JPanel implements Runnable {
     public static boolean losing = false;
     public BufferedImage font;
     public Shape nextPiece;
-
     public boolean lose = false;
-    public static boolean pause = false;
-    /**
-     *
-     */
     private static final long serialVersionUID = 1L;
 
     public TetrisPanel() {
         TinySound.init();
+
         nextPiece = new Shape();
         delay = 0;
-        Boolean usePrefix = true;
-        String prefix = "";
-        if (usePrefix) {
-            String s = System.getProperty("user.dir");
-            prefix = s + "/Tetris/";
-        }
+
+        String prefix = System.getProperty("user.dir") + "/Tetris/";
+
         bg = new ImageIcon(prefix + "graphics/gamebackgroundgamea.png").getImage();
         go = new ImageIcon(prefix + "graphics/gameover.png").getImage();
         ps = new ImageIcon(prefix + "graphics/pause.png").getImage();
@@ -88,11 +81,9 @@ public class TetrisPanel extends JPanel implements Runnable {
         }
 
         this.setBackground(new Color(100, 100, 100));
-
     }
 
     public List<BufferedImage> convert(String text) {
-
         List<BufferedImage> images = new ArrayList<>(25);
 
         for (char c : text.toCharArray()) {
@@ -115,37 +106,16 @@ public class TetrisPanel extends JPanel implements Runnable {
         }
 
         return images;
-
     }
 
     public void lose() {
-
         losing = true;
         delay = 500;
-
     }
 
     public void init(Frame arg0) {
         // Just Start The Thread...
         thread.start();
-
-    }
-
-    public void keyboardEvent(KeyEvent e) {
-
-
-        if (e.getKeyCode() == KeyEvent.VK_ENTER) {
-
-            if (!lose) {
-                if (pause == false) {
-                    Frame.board.timer.stop();
-                } else {
-                    Frame.board.timer.start();
-                }
-                pause = !pause;
-            }
-        }
-
     }
 
     @Override
@@ -184,7 +154,7 @@ public class TetrisPanel extends JPanel implements Runnable {
 
         g2d.dispose();
 
-        if (pause) {
+        if (Frame.board.isPaused) {
             g.drawImage(ps, 75, 0, 400, 720, null);
         }
 
@@ -192,7 +162,7 @@ public class TetrisPanel extends JPanel implements Runnable {
             g.drawImage(go, 75, 0, 400, 720, null);
         }
 
-        if (!lose && !pause && !Frame.board.isStarted) {
+        if (!lose && !Frame.board.isPaused && !Frame.board.isStarted) {
             g.drawImage(we, 75, 0, 400, 720, null);
         }
         
@@ -203,7 +173,6 @@ public class TetrisPanel extends JPanel implements Runnable {
         paintPiece(g, box[5], Tetrominoes.SShape);
         paintPiece(g, box[6], Tetrominoes.TShape);
         paintPiece(g, box[7], Tetrominoes.ZShape);
-
     }
     
     private void paintPiece( Graphics g, Image img, Tetrominoes shape) {
@@ -216,14 +185,11 @@ public class TetrisPanel extends JPanel implements Runnable {
 
     @Override
     public void run() {
-
         while (true) {
-
             if (losing) {
                 if (delay > 0) {
                     delay--;
                 } else {
-
                     go2.play();
                     lose = true;
                     losing = false;
@@ -238,7 +204,5 @@ public class TetrisPanel extends JPanel implements Runnable {
                 System.out.println(e.toString());
             }
         }
-
     }
-
 }

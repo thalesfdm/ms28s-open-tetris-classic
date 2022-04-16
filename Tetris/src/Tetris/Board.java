@@ -53,7 +53,15 @@ public class Board extends JPanel implements ActionListener {
 
     public void keyPressed(KeyEvent e) {
         if (e.getKeyCode() == KeyEvent.VK_ENTER) {
-            pauseGame();
+            if (!isStarted) {
+                startGame();
+            } else {
+                if (!isPaused) {
+                    pauseGame();
+                } else {
+                    resumeGame();
+                }
+            }
         }
 
         if (isPaused) {
@@ -126,13 +134,17 @@ public class Board extends JPanel implements ActionListener {
         if (!isStarted) {
             return;
         }
+        isPaused = true;
+        timer.stop();
+    }
 
-        isPaused = !isPaused;
-
-        if (!isPaused) {
-            timer.start();
-            statusbar.setText(String.valueOf(numLinesRemoved));
+    private void resumeGame() {
+        if (!isStarted) {
+            return;
         }
+        isPaused = false;
+        timer.start();
+//        statusbar.setText(String.valueOf(numLinesRemoved));
     }
 
     public void resetPanel(){
@@ -220,7 +232,7 @@ public class Board extends JPanel implements ActionListener {
         
         curPiece.setShape(nextPiece.getShape());
         nextPiece.setRandomShape();
-        Frame.panel.nextPiece = nextPiece;
+        Frame.tetrisPanel.nextPiece = nextPiece;
         curX = BoardWidth / 2 + 1;
         curY = BoardHeight - 1 + curPiece.minY();
 
@@ -232,7 +244,7 @@ public class Board extends JPanel implements ActionListener {
             TetrisPanel.aTheme.stop();
             TetrisPanel.bTheme.stop();
             TetrisPanel.cTheme.stop();
-            Frame.panel.lose();
+            Frame.tetrisPanel.lose();
         }
     }
 
