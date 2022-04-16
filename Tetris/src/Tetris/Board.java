@@ -30,7 +30,6 @@ public class Board extends JPanel implements ActionListener {
     JLabel statusbar;
     Shape curPiece, nextPiece;
     Tetrominoes[] board;
-    public boolean blinking = false;
     public boolean first = false;
 
     public Board() {
@@ -157,7 +156,7 @@ public class Board extends JPanel implements ActionListener {
             for (int j = 0; j < BoardWidth; ++j) {
                 Tetrominoes shape = shapeAt(j, BoardHeight - i - 1);
                 if (shape != Tetrominoes.NoShape) {
-                    drawSquare(g, 0 + j * squareWidth() + 75,
+                    drawSquare(g, j * squareWidth() + 75,
                             boardTop + i * squareHeight(), shape);
                 }
 
@@ -168,7 +167,7 @@ public class Board extends JPanel implements ActionListener {
             for (int i = 0; i < 4; ++i) {
                 int x = curX + curPiece.x(i);
                 int y = curY - curPiece.y(i);
-                drawSquare(g, 0 + x * squareWidth() + 75,
+                drawSquare(g, x * squareWidth() + 75,
                         boardTop + (BoardHeight - y - 1) * squareHeight(),
                         curPiece.getShape());
             }
@@ -339,8 +338,6 @@ public class Board extends JPanel implements ActionListener {
                 return 5;
             case TShape:
                 return 6;
-            case ZShape:
-                return 7;
             default:
                 return 7;
         }
