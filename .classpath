@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="src" path="Tetris/src"/>
+	<classpathentry kind="lib" path="Tetris/lib/CopyLibs/org-netbeans-modules-java-j2seproject-copylibstask.jar"/>
+	<classpathentry kind="lib" path="Tetris/lib/jorbis-0.0.17.jar"/>
+	<classpathentry kind="lib" path="Tetris/lib/tinysound-1.1.1.jar"/>
+	<classpathentry kind="lib" path="Tetris/lib/tritonus_share.jar"/>
+	<classpathentry kind="lib" path="Tetris/lib/vorbisspi1.0.3.jar"/>
+	<classpathentry kind="output" path="out/production/OpenTetrisClassic"/>
+</classpath>

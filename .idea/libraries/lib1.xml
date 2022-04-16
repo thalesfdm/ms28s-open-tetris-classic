@@ -1,0 +1,12 @@
+<component name="libraryTable">
+  <library name="lib1">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/Tetris/lib/vorbisspi1.0.3.jar!/" />
+      <root url="jar://$PROJECT_DIR$/Tetris/lib/jorbis-0.0.17.jar!/" />
+      <root url="jar://$PROJECT_DIR$/Tetris/lib/tinysound-1.1.1.jar!/" />
+      <root url="jar://$PROJECT_DIR$/Tetris/lib/tritonus_share.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>
