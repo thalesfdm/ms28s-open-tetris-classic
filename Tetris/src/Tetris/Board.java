@@ -38,13 +38,7 @@ public class Board extends JPanel implements ActionListener {
         curPiece = new Shape();
         nextPiece = new Shape();
         timer = new Timer(400, this);
-        Boolean usePrefix = true;
-        String prefix = "";
-        
-        if (usePrefix) {
-            String s = System.getProperty("user.dir");
-            prefix = s + "/Tetris/";
-        }
+        String prefix = System.getProperty("user.dir") + "/Tetris/";
 
         box[1] = new ImageIcon(prefix + "graphics/pieces/1boxP1.png").getImage();
         box[2] = new ImageIcon(prefix + "graphics/pieces/2box.png").getImage();
@@ -60,7 +54,7 @@ public class Board extends JPanel implements ActionListener {
 
     public void keyPressed(KeyEvent e) {
         if (e.getKeyCode() == KeyEvent.VK_ENTER) {
-            pause();
+            pauseGame();
         }
 
         if (isPaused) {
@@ -117,7 +111,7 @@ public class Board extends JPanel implements ActionListener {
         return board[(y * BoardWidth) + x];
     }
 
-    public void start() {
+    public void startGame() {
         if (isPaused) {
             return;
         }
@@ -127,6 +121,19 @@ public class Board extends JPanel implements ActionListener {
         newPiece();
 
         timer.start();
+    }
+
+    private void pauseGame() {
+        if (!isStarted) {
+            return;
+        }
+
+        isPaused = !isPaused;
+
+        if (!isPaused) {
+            timer.start();
+            statusbar.setText(String.valueOf(numLinesRemoved));
+        }
     }
 
     public void resetPanel(){
@@ -139,19 +146,6 @@ public class Board extends JPanel implements ActionListener {
         linesComp = 0;
         timer.setDelay(400);
         clearBoard();
-    }
-
-    private void pause() {
-        if (!isStarted) {
-            return;
-        }
-
-        isPaused = !isPaused;
-        
-        if (!isPaused) {
-            timer.start();
-            statusbar.setText(String.valueOf(numLinesRemoved));
-        }
     }
 
     @Override

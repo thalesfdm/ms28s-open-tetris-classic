@@ -198,7 +198,7 @@ public class Frame extends JFrame {
             }
             panel.lose = false;
             board.clearBoard();
-            board.start();
+            board.startGame();
         });
 
         sounds.add(controls);
