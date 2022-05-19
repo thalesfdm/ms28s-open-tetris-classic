@@ -11,12 +11,8 @@ import javax.swing.*;
 import kuusisto.tinysound.TinySound;
 
 public class Frame extends JFrame {
-
-    /**
-     *
-     */
     private static final long serialVersionUID = 1L;
-    public static TetrisPanel panel = new TetrisPanel();
+    public static TetrisPanel tetrisPanel = new TetrisPanel();
     public static Image icon;
     public static Board board = new Board();
 
@@ -37,7 +33,7 @@ public class Frame extends JFrame {
         final ControlsWindow cont = new ControlsWindow();
         JMenuBar menuBar;
         JMenu menu, sounds, music, volume, about;
-        JMenuItem menuItem, pauseItem, exitItem, controls, aboutItem;
+        JMenuItem newGameMenuItem, pauseGameMenuItem, exitGameMenuItem, controlsMenuItem, aboutMenuItem;
         final JRadioButtonMenuItem aTheme;
         final JRadioButtonMenuItem bTheme;
         final JRadioButtonMenuItem cTheme;
@@ -90,19 +86,17 @@ public class Frame extends JFrame {
 
         sounds.add(snd);
         sounds.add(msc);
-        menuItem = new JMenuItem("New Game",
-                KeyEvent.VK_T);
-        pauseItem = new JMenuItem("Pause Game",
-                KeyEvent.VK_T);
-        exitItem = new JMenuItem("Exit Game",
-                KeyEvent.VK_T);
-        controls = new JMenuItem("Controls...",
-                KeyEvent.VK_T);
+
+        newGameMenuItem = new JMenuItem("New Game", KeyEvent.VK_T);
+        pauseGameMenuItem = new JMenuItem("Pause Game", KeyEvent.VK_T);
+        exitGameMenuItem = new JMenuItem("Exit Game", KeyEvent.VK_T);
+        controlsMenuItem = new JMenuItem("Controls...", KeyEvent.VK_T);
+
         sounds.addSeparator();
 
-        aboutItem = new JMenuItem("About...");
+        aboutMenuItem = new JMenuItem("About...");
 
-        controls.addActionListener((ActionEvent e) -> {
+        controlsMenuItem.addActionListener((ActionEvent e) -> {
             TetrisPanel.turn.play();
             cont.setVisible(true);
         });
@@ -136,7 +130,8 @@ public class Frame extends JFrame {
             TetrisPanel.cTheme.play(true);
             TetrisPanel.turn.play();
         });
-        exitItem.addActionListener((ActionEvent e) -> {
+
+        exitGameMenuItem.addActionListener((ActionEvent e) -> {
             TetrisPanel.turn.play();
             System.exit(1);
         });
@@ -171,42 +166,44 @@ public class Frame extends JFrame {
             volume100.setSelected(true);
         });
 
-        pauseItem.addActionListener((ActionEvent e) -> {
+        pauseGameMenuItem.addActionListener((ActionEvent e) -> {
             TetrisPanel.turn.play();
-            if (!panel.lose) {
-                if (false == TetrisPanel.pause) {
-                    TetrisPanel.pause = true;
+            if (!tetrisPanel.lose) {
+                if (!board.isPaused) {
+                    board.isPaused = true;
                     board.timer.stop();
                 } else {
-                    TetrisPanel.pause = false;
+                    board.isPaused = false;
                     board.timer.start();
                 }
             }
         });
 
-        menuItem.addActionListener((ActionEvent e) -> {
+        newGameMenuItem.addActionListener((ActionEvent e) -> {
             TetrisPanel.turn.play();
 
-            if (aTheme.isSelected() == true) {
+            if (aTheme.isSelected()) {
                 TetrisPanel.aTheme.play(true);
             }
-            if (bTheme.isSelected() == true) {
+            if (bTheme.isSelected()) {
                 TetrisPanel.bTheme.play(true);
             }
-            if (cTheme.isSelected() == true) {
+            if (cTheme.isSelected()) {
                 TetrisPanel.cTheme.play(true);
             }
-            panel.lose = false;
+
+            tetrisPanel.lose = false;
+
             board.clearBoard();
-            board.start();
+            board.startGame();
         });
 
-        sounds.add(controls);
-        menu.add(menuItem);
-        menu.add(pauseItem);
+        sounds.add(controlsMenuItem);
+        menu.add(newGameMenuItem);
+        menu.add(pauseGameMenuItem);
         menu.addSeparator();
-        menu.add(exitItem);
-        about.add(aboutItem);
+        menu.add(exitGameMenuItem);
+        about.add(aboutMenuItem);
 
         setJMenuBar(menuBar);
         setLayout(null);
@@ -216,9 +213,9 @@ public class Frame extends JFrame {
         setTitle("Tetris");
         setResizable(false);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
-        panel.init(this);
-        add(panel);
-        panel.setBounds(0, 0, 800, 770);
+        tetrisPanel.init(this);
+        add(tetrisPanel);
+        tetrisPanel.setBounds(0, 0, 800, 770);
         add(board);
         board.setBounds(0, 50, 400, 720);
         setLocationRelativeTo(null);
@@ -230,10 +227,8 @@ public class Frame extends JFrame {
 
             @Override
             public void keyPressed(KeyEvent e) {
-
-                panel.keyboardEvent(e);
+//                tetrisPanel.keyboardEvent(e);
                 board.keyPressed(e);
-
             }
 
             @Override
@@ -241,7 +236,7 @@ public class Frame extends JFrame {
             }
         });
 
-        aboutItem.addActionListener((ActionEvent e) -> {
+        aboutMenuItem.addActionListener((ActionEvent e) -> {
             JOptionPane.showMessageDialog(this, "OpenTetris Classic v1.0-dev 08/10/2021\n\nA full open-source recreation of the 1989 hit game.\n\nOriginally developed by Kyle Bredenkamp.\n\nRefactored and improved by:\nPedro G. K. Bertella\nJailson L. Panizzon\nArthur R. P. So.\n\nGitHub\nhttps://github.com/pedrobertella/OpenTetrisClassic\n", "About OpenTetris Classic", JOptionPane.INFORMATION_MESSAGE);
         });
 
