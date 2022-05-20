@@ -8,6 +8,7 @@ import java.awt.event.KeyListener;
 import javax.swing.JOptionPane;
 
 import javax.swing.*;
+
 import kuusisto.tinysound.TinySound;
 
 public class Frame extends JFrame {
@@ -26,7 +27,7 @@ public class Frame extends JFrame {
     public Frame() {
         try {
             UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | UnsupportedLookAndFeelException ex) {
+        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | UnsupportedLookAndFeelException ignored) {
         }
 
         icon = new ImageIcon("graphics/pieces/6.png").getImage();
@@ -62,9 +63,10 @@ public class Frame extends JFrame {
         volume20 = new JRadioButtonMenuItem("20%");
         volume40 = new JRadioButtonMenuItem("40%");
         volume60 = new JRadioButtonMenuItem("60%");
-        volume60.setSelected(true);
         volume80 = new JRadioButtonMenuItem("80%");
         volume100 = new JRadioButtonMenuItem("100%");
+
+        volume60.setSelected(true);
 
         music.add(aTheme);
         music.add(bTheme);
@@ -146,7 +148,7 @@ public class Frame extends JFrame {
             volume20.setSelected(true);
         });
 
-        volume40.addActionListener((ActionEvent e) -> {            
+        volume40.addActionListener((ActionEvent e) -> {
             setVolumeFromMenu(0.4);
             volume40.setSelected(true);
         });
