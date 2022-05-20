@@ -53,8 +53,9 @@ public class Board extends JPanel implements ActionListener {
 
     public void keyPressed(KeyEvent e) {
         if (e.getKeyCode() == KeyEvent.VK_ENTER) {
-            if (!isStarted) {
+            if (!isStarted || Frame.tetrisPanel.lose) {
                 startGame();
+                Frame.tetrisPanel.lose = false;
             } else {
                 if (!isPaused) {
                     pauseGame();
@@ -64,7 +65,7 @@ public class Board extends JPanel implements ActionListener {
             }
         }
 
-        if (isPaused) {
+        if (!isStarted || isPaused) {
             return;
         }
 
@@ -72,24 +73,24 @@ public class Board extends JPanel implements ActionListener {
             TetrisPanel.move.play();
             tryMove(curPiece, curX - 1, curY);
         }
-        
+
         if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
             TetrisPanel.move.play();
             tryMove(curPiece, curX + 1, curY);
         }
-        
+
         if (e.getKeyCode() == KeyEvent.VK_D) {
             tryMove(curPiece.rotateRight(), curX, curY);
         }
-        
+
         if (e.getKeyCode() == KeyEvent.VK_A) {
             tryMove(curPiece.rotateLeft(), curX, curY);
         }
-        
+
         if (e.getKeyCode() == KeyEvent.VK_UP) {
             dropDown();
         }
-        
+
         if (e.getKeyCode() == KeyEvent.VK_DOWN) {
             TetrisPanel.move.play();
             oneLineDown();
@@ -147,7 +148,7 @@ public class Board extends JPanel implements ActionListener {
 //        statusbar.setText(String.valueOf(numLinesRemoved));
     }
 
-    public void resetPanel(){
+    public void resetPanel() {
         isStarted = true;
         isFallingFinished = false;
         numLinesRemoved = 0;
@@ -229,7 +230,7 @@ public class Board extends JPanel implements ActionListener {
             nextPiece.setRandomShape();
             first = false;
         }
-        
+
         curPiece.setShape(nextPiece.getShape());
         nextPiece.setRandomShape();
         Frame.tetrisPanel.nextPiece = nextPiece;
@@ -316,12 +317,12 @@ public class Board extends JPanel implements ActionListener {
     }
 
     public void scoring(int numFullLines) {
-    	int levelMultiplier = level + 1;
-    	
-    	if (numFullLines == 1){
-    		TetrisPanel.line.play();
-    		score += 40 * levelMultiplier;
-    	}
+        int levelMultiplier = level + 1;
+
+        if (numFullLines == 1) {
+            TetrisPanel.line.play();
+            score += 40 * levelMultiplier;
+        }
         if (numFullLines == 2) {
             TetrisPanel.line.play();
             score += 60 * levelMultiplier;

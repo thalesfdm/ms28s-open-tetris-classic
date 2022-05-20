@@ -4,11 +4,11 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Image;
-import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import kuusisto.tinysound.*;
 
@@ -75,7 +75,7 @@ public class TetrisPanel extends JPanel implements Runnable {
         TinySound.setGlobalVolume(0.6);
 
         try {
-            font = ImageIO.read(getClass().getResource("/graphics/font.png"));
+            font = ImageIO.read(Objects.requireNonNull(getClass().getResource("/graphics/font.png")));
         } catch (IOException ex) {
             System.out.println(ex.toString());
         }
@@ -109,8 +109,8 @@ public class TetrisPanel extends JPanel implements Runnable {
     }
 
     public void lose() {
-        losing = true;
-        delay = 500;
+        lose = true;
+//        delay = 200;
     }
 
     public void init(Frame arg0) {
@@ -165,7 +165,7 @@ public class TetrisPanel extends JPanel implements Runnable {
         if (!lose && !Frame.board.isPaused && !Frame.board.isStarted) {
             g.drawImage(we, 75, 0, 400, 720, null);
         }
-        
+
         paintPiece(g, box[1], Tetrominoes.LineShape);
         paintPiece(g, box[2], Tetrominoes.MirroredLShape);
         paintPiece(g, box[3], Tetrominoes.LShape);
@@ -174,9 +174,9 @@ public class TetrisPanel extends JPanel implements Runnable {
         paintPiece(g, box[6], Tetrominoes.TShape);
         paintPiece(g, box[7], Tetrominoes.ZShape);
     }
-    
-    private void paintPiece( Graphics g, Image img, Tetrominoes shape) {
-        if (!lose && nextPiece.getShape() == shape ) {
+
+    private void paintPiece(Graphics g, Image img, Tetrominoes shape) {
+        if (!lose && nextPiece.getShape() == shape) {
             g.drawImage(img, (595 + ((170 - (img.getWidth(null) * 5)) / 2)),
                     (515 + ((170 - (img.getHeight(null) * 5)) / 2)), img.getWidth(null) * 5,
                     img.getHeight(null) * 5, null);
@@ -186,15 +186,15 @@ public class TetrisPanel extends JPanel implements Runnable {
     @Override
     public void run() {
         while (true) {
-            if (losing) {
-                if (delay > 0) {
-                    delay--;
-                } else {
-                    go2.play();
-                    lose = true;
-                    losing = false;
-                }
-            }
+//            if (losing) {
+//                if (delay > 0) {
+//                    delay--;
+//                } else {
+//                    go2.play();
+//                    lose = true;
+//                    losing = false;
+//                }
+//            }
 
             repaint();
 
