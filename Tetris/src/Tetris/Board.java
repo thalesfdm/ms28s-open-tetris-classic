@@ -242,11 +242,15 @@ public class Board extends JPanel implements ActionListener {
             curPiece.setShape(Tetrominoes.NoShape);
             timer.stop();
             isStarted = false;
-            TetrisPanel.aTheme.stop();
-            TetrisPanel.bTheme.stop();
-            TetrisPanel.cTheme.stop();
+            stopThemeMusic();
             Frame.tetrisPanel.lose();
         }
+    }
+
+    private void stopThemeMusic() {
+        TetrisPanel.aTheme.stop();
+        TetrisPanel.bTheme.stop();
+        TetrisPanel.cTheme.stop();
     }
 
     private boolean tryMove(Shape newPiece, int newX, int newY) {
