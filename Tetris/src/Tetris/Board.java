@@ -238,13 +238,17 @@ public class Board extends JPanel implements ActionListener {
         curY = BoardHeight - 1 + curPiece.minY();
 
         if (!tryMove(curPiece, curX, curY)) {
-            TetrisPanel.go1.play();
-            curPiece.setShape(Tetrominoes.NoShape);
-            timer.stop();
-            isStarted = false;
-            stopThemeMusic();
-            Frame.tetrisPanel.lose();
+            gameOver();
         }
+    }
+
+    private void gameOver() {
+        TetrisPanel.go1.play();
+        curPiece.setShape(Tetrominoes.NoShape);
+        timer.stop();
+        isStarted = false;
+        stopThemeMusic();
+        Frame.tetrisPanel.lose();
     }
 
     private void stopThemeMusic() {
