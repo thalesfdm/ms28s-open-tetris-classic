@@ -36,6 +36,7 @@ public class TetrisPanel extends JPanel implements Runnable {
     public Shape nextPiece;
     public boolean lose = false;
     private static final long serialVersionUID = 1L;
+    private Graphics2D g2d;
 
     public TetrisPanel() {
         TinySound.init();
@@ -123,35 +124,13 @@ public class TetrisPanel extends JPanel implements Runnable {
         g.drawImage(bg, 0, 0, 800, 720, null);
         Frame.board.paint(g);
 
-        Graphics2D g2d = (Graphics2D) g.create();
-        List<BufferedImage> text = convert(String.valueOf(Frame.board.score));
-        int x = (105 + (55 - (text.size() * 8)) / 2);
-        int y = (23);
+        g2d = (Graphics2D) g.create();
         g2d.scale(5, 5);
-        for (BufferedImage img : text) {
 
-            g2d.drawImage(img, x, y, this);
-            x += img.getWidth();
-        }
-
-        List<BufferedImage> text2 = convert(String.valueOf(Frame.board.level));
-        int x2 = (112 + (40 - (text2.size() * 8)) / 2);
-        int y2 = (56);
-        for (BufferedImage img2 : text2) {
-
-            g2d.drawImage(img2, x2, y2, this);
-            x2 += img2.getWidth();
-        }
-
-        List<BufferedImage> text3 = convert(String.valueOf(Frame.board.numLinesRemoved));
-        int x3 = (112 + (40 - (text3.size() * 8)) / 2);
-        int y3 = (80);
-        for (BufferedImage img3 : text3) {
-
-            g2d.drawImage(img3, x3, y3, this);
-            x3 += img3.getWidth();
-        }
-
+        drawInfoElement(Frame.board.score, 105, 55, 23);
+        drawInfoElement(Frame.board.level, 112, 40, 56);
+        drawInfoElement(Frame.board.numLinesRemoved, 112, 40, 80);
+        
         g2d.dispose();
 
         if (Frame.board.isPaused) {
@@ -173,6 +152,15 @@ public class TetrisPanel extends JPanel implements Runnable {
         paintPiece(g, box[5], Tetrominoes.SShape);
         paintPiece(g, box[6], Tetrominoes.TShape);
         paintPiece(g, box[7], Tetrominoes.ZShape);
+    }
+
+    private void drawInfoElement(int element, int x1, int x2, int y) {
+        List<BufferedImage> text = convert(String.valueOf(element));
+        int x = (x1 + (x2 - (text.size() * 8)) / 2);
+        for (BufferedImage img : text) {
+            g2d.drawImage(img, x, y, this);
+            x += img.getWidth();
+        }
     }
 
     private void paintPiece(Graphics g, Image img, Tetrominoes shape) {
