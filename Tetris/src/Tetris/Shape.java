@@ -6,14 +6,12 @@ import java.lang.Math;
 public class Shape {
 
     enum Tetrominoes {
-        NoShape, ZShape, SShape, LineShape,
-        TShape, SquareShape, LShape, MirroredLShape
-    };
+        NoShape, ZShape, SShape,SquareShape ,
+        TShape, LineShape, LShape, MirroredLShape
+    }
 
     private Tetrominoes pieceShape;
-    private int coords[][];
-    private int[][][] coordsTable;
-    public int myWidth = 32, myHeight = 8;
+    private int[][] coords;
 
     public Shape() {
 
@@ -24,21 +22,27 @@ public class Shape {
 
     public void setShape(Tetrominoes shape) {
 
-        coordsTable = new int[][][]{
-            {{0, 0}, {0, 0}, {0, 0}, {0, 0}},
-            {{0, -1}, {0, 0}, {-1, 0}, {-1, 1}},
-            {{0, -1}, {0, 0}, {1, 0}, {1, 1}},
-            {{0, -1}, {0, 0}, {0, 1}, {0, 2}},
-            {{-1, 0}, {0, 0}, {1, 0}, {0, 1}},
-            {{0, 0}, {1, 0}, {0, 1}, {1, 1}},
-            {{-1, -1}, {0, -1}, {0, 0}, {0, 1}},
-            {{1, -1}, {0, -1}, {0, 0}, {0, 1}}
+        int[][][] coordsTable = new int[][][]{
+                //NoShape
+                {{0, 0}, {0, 0}, {0, 0}, {0, 0}},
+                //ZShape
+                {{0, -1}, {0, 0}, {-1, 0}, {-1, 1}},
+                //SShape
+                {{0, -1}, {0, 0}, {1, 0}, {1, 1}},
+                //SquareShape
+                {{0, 0}, {1, 0}, {0, 1}, {1, 1}},
+                //TShape
+                {{-1, 0}, {0, 0}, {1, 0}, {0, 1}},
+                //LineShape
+                {{0, -1}, {0, 0}, {0, 1}, {0, 2}},
+                //LShape
+                {{-1, -1}, {0, -1}, {0, 0}, {0, 1}},
+                //MirroredLShape
+                {{1, -1}, {0, -1}, {0, 0}, {0, 1}}
         };
 
         for (int i = 0; i < 4; i++) {
-            for (int j = 0; j < 2; ++j) {
-                coords[i][j] = coordsTable[shape.ordinal()][i][j];
-            }
+            System.arraycopy(coordsTable[shape.ordinal()][i], 0, coords[i], 0, 2);
         }
         pieceShape = shape;
 
@@ -65,10 +69,16 @@ public class Shape {
     }
 
     public void setRandomShape() {
-        Random r = new Random();
-        int x = Math.abs(r.nextInt()) % 7 + 1;
+        int r = new Random().nextInt((7 - 1) + 1) + 1;
         Tetrominoes[] values = Tetrominoes.values();
-        setShape(values[x]);
+        setShape(values[r]);
+
+    }
+
+    public void setFirstRandomShape() {
+        int r = new Random().nextInt((7 - 4) + 1) + 4;
+        Tetrominoes[] values = Tetrominoes.values();
+        setShape(values[r]);
 
     }
 

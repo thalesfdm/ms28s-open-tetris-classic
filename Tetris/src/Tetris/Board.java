@@ -227,7 +227,7 @@ public class Board extends JPanel implements ActionListener {
 
     private void newPiece() {
         if (first) {
-            nextPiece.setRandomShape();
+            nextPiece.setFirstRandomShape();
             first = false;
         }
 
