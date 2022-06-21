@@ -14,7 +14,7 @@ import javax.swing.JPanel;
 import javax.swing.Timer;
 
 public class Board extends JPanel implements ActionListener {
-	final int BoardWidth = 10;
+    final int BoardWidth = 10;
     final int BoardHeight = 18;
     Timer timer;
     Shape curPiece;
