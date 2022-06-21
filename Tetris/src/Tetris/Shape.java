@@ -6,7 +6,7 @@ import java.lang.Math;
 public class Shape {
 
     enum Tetrominoes {
-        NoShape, ZShape, SShape,SquareShape ,
+        NoShape, ZShape, SShape, SquareShape,
         TShape, LineShape, LShape, MirroredLShape
     }
 
@@ -92,7 +92,7 @@ public class Shape {
     }
 
     public Shape rotateLeft() {
-        TetrisPanel.turn.play();
+        SoundController.playTurn();
         if (pieceShape == Tetrominoes.SquareShape) {
             return this;
         }
@@ -108,7 +108,7 @@ public class Shape {
     }
 
     public Shape rotateRight() {
-        TetrisPanel.turn.play();
+        SoundController.playTurn();
         if (pieceShape == Tetrominoes.SquareShape) {
             return this;
         }

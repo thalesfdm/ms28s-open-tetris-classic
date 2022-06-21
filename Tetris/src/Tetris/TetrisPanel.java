@@ -25,9 +25,7 @@ public class TetrisPanel extends JPanel implements Runnable {
     public static Image ps;
     public static Image we;
     public static Image[] box;
-    public static Sound turn, move, drop, line, go1, go2, linefour, newlevel;
     public static int delay;
-    public static boolean losing = false;
     public BufferedImage font;
     public Shape nextPiece;
     public boolean lose = false;
@@ -36,6 +34,7 @@ public class TetrisPanel extends JPanel implements Runnable {
 
     public TetrisPanel() {
         TinySound.init();
+        TinySound.setGlobalVolume(0.6);
 
         nextPiece = new Shape();
         delay = 0;
@@ -56,16 +55,6 @@ public class TetrisPanel extends JPanel implements Runnable {
         box[5] = new ImageIcon(prefix + "graphics/pieces/5.png").getImage();
         box[6] = new ImageIcon(prefix + "graphics/pieces/6.png").getImage();
         box[7] = new ImageIcon(prefix + "graphics/pieces/7.png").getImage();
-
-        turn = TinySound.loadSound("sounds/turn.wav");
-        move = TinySound.loadSound("sounds/move.wav");
-        drop = TinySound.loadSound("sounds/blockfall.wav");
-        line = TinySound.loadSound("sounds/lineclear.wav");
-        go1 = TinySound.loadSound("sounds/gamemover1.wav");
-        go2 = TinySound.loadSound("sounds/gamemover2.wav");
-        linefour = TinySound.loadSound("sounds/4lineclear.wav");
-        newlevel = TinySound.loadSound("sounds/newlevel.wav");
-        TinySound.setGlobalVolume(0.6);
 
         try {
             font = ImageIO.read(Objects.requireNonNull(getClass().getResource("/graphics/font.png")));
@@ -106,7 +95,7 @@ public class TetrisPanel extends JPanel implements Runnable {
 //        delay = 200;
     }
 
-    public void init(Frame arg0) {
+    public void init() {
         // Just Start The Thread...
         thread.start();
     }
@@ -122,7 +111,7 @@ public class TetrisPanel extends JPanel implements Runnable {
         drawInfoElement(Frame.board.score, 105, 55, 23);
         drawInfoElement(Frame.board.level, 112, 40, 56);
         drawInfoElement(Frame.board.numLinesRemoved, 112, 40, 80);
-        
+
         g2d.dispose();
 
         if (Frame.board.isPaused) {
@@ -166,18 +155,7 @@ public class TetrisPanel extends JPanel implements Runnable {
     @Override
     public void run() {
         while (true) {
-//            if (losing) {
-//                if (delay > 0) {
-//                    delay--;
-//                } else {
-//                    go2.play();
-//                    lose = true;
-//                    losing = false;
-//                }
-//            }
-
             repaint();
-
             try {
                 Thread.sleep(1);
             } catch (InterruptedException e) {

@@ -74,12 +74,12 @@ public class Board extends JPanel implements ActionListener {
         }
 
         if (e.getKeyCode() == KeyEvent.VK_LEFT) {
-            TetrisPanel.move.play();
+            SoundController.playMove();
             tryMove(curPiece, curX - 1, curY);
         }
 
         if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
-            TetrisPanel.move.play();
+            SoundController.playMove();
             tryMove(curPiece, curX + 1, curY);
         }
 
@@ -96,7 +96,7 @@ public class Board extends JPanel implements ActionListener {
         }
 
         if (e.getKeyCode() == KeyEvent.VK_DOWN) {
-            TetrisPanel.move.play();
+            SoundController.playMove();
             oneLineDown();
         }
     }
@@ -216,7 +216,7 @@ public class Board extends JPanel implements ActionListener {
     }
 
     private void pieceDropped() {
-        TetrisPanel.drop.play();
+        SoundController.playBlockFall();
         for (int i = 0; i < 4; ++i) {
             int x = curX + curPiece.x(i);
             int y = curY - curPiece.y(i);
@@ -248,7 +248,7 @@ public class Board extends JPanel implements ActionListener {
     }
 
     private void gameOver() {
-        TetrisPanel.go1.play();
+        SoundController.playGameOver1();
         curPiece.setShape(Tetrominoes.NoShape);
         timer.stop();
         isStarted = false;
@@ -317,7 +317,7 @@ public class Board extends JPanel implements ActionListener {
             linesComp = 0;
             linesTillNext += 10;
             timer.setDelay(timer.getDelay() - 25);
-            TetrisPanel.newlevel.play();
+            SoundController.playNewLevel();
         }
     }
 
@@ -325,19 +325,19 @@ public class Board extends JPanel implements ActionListener {
         int levelMultiplier = level + 1;
 
         if (numFullLines == 1) {
-            TetrisPanel.line.play();
+            SoundController.playLineClear();
             score += 40 * levelMultiplier;
         }
         if (numFullLines == 2) {
-            TetrisPanel.line.play();
+            SoundController.playLineClear();
             score += 60 * levelMultiplier;
         }
         if (numFullLines == 3) {
-            TetrisPanel.line.play();
+            SoundController.playLineClear();
             score += 160 * levelMultiplier;
         }
         if (numFullLines == 4) {
-            TetrisPanel.linefour.play();
+            SoundController.playCombo();
             score += 760 * levelMultiplier;
         }
     }

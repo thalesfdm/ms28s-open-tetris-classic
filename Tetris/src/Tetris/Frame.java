@@ -104,7 +104,7 @@ public class Frame extends JFrame {
         aboutMenuItem = new JMenuItem("About...");
 
         controlsMenuItem.addActionListener((ActionEvent e) -> {
-            TetrisPanel.turn.play();
+            SoundController.playTurn();
             cont.setVisible(true);
         });
 
@@ -113,7 +113,7 @@ public class Frame extends JFrame {
             bTheme.setSelected(false);
             cTheme.setSelected(false);
             musicController.playThemeA();
-            TetrisPanel.turn.play();
+            SoundController.playTurn();
         });
 
         bTheme.addActionListener((ActionEvent e) -> {
@@ -121,7 +121,7 @@ public class Frame extends JFrame {
             bTheme.setSelected(true);
             cTheme.setSelected(false);
             musicController.playThemeB();
-            TetrisPanel.turn.play();
+            SoundController.playTurn();
         });
 
         cTheme.addActionListener((ActionEvent e) -> {
@@ -129,11 +129,11 @@ public class Frame extends JFrame {
             bTheme.setSelected(false);
             cTheme.setSelected(true);
             musicController.playThemeC();
-            TetrisPanel.turn.play();
+            SoundController.playTurn();
         });
 
         exitGameMenuItem.addActionListener((ActionEvent e) -> {
-            TetrisPanel.turn.play();
+            SoundController.playTurn();
             System.exit(1);
         });
 
@@ -168,7 +168,7 @@ public class Frame extends JFrame {
         });
 
         pauseGameMenuItem.addActionListener((ActionEvent e) -> {
-            TetrisPanel.turn.play();
+            SoundController.playTurn();
             if (!tetrisPanel.lose) {
                 if (!board.isPaused) {
                     board.isPaused = true;
@@ -181,7 +181,7 @@ public class Frame extends JFrame {
         });
 
         newGameMenuItem.addActionListener((ActionEvent e) -> {
-            TetrisPanel.turn.play();
+            SoundController.playTurn();
             musicController.play();
             tetrisPanel.lose = false;
             board.clearBoard();
@@ -203,7 +203,7 @@ public class Frame extends JFrame {
         setTitle("Tetris");
         setResizable(false);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
-        tetrisPanel.init(this);
+        tetrisPanel.init();
         add(tetrisPanel);
         tetrisPanel.setBounds(0, 0, 800, 770);
         add(board);
