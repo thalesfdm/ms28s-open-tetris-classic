@@ -1,22 +1,14 @@
 package Tetris;
 
 import java.awt.Image;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-
 import javax.swing.ImageIcon;
+import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JButton;
 
 public class ControlsWindow extends JFrame {
-
     public static Image icon;
-    private JFrame frame;
 
-    /**
-     * Launch the application.
-     */
     /**
      * Create the application.
      */
@@ -97,25 +89,11 @@ public class ControlsWindow extends JFrame {
         btnClose.setBounds(157, 234, 89, 23);
         getContentPane().add(btnClose);
 
-        btnClose.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                setVisible(false);
-            }
-        });
+        btnClose.addActionListener(e -> setVisible(false));
 
-        btnApply.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                setVisible(false);
-            }
-        });
+        btnApply.addActionListener(e -> setVisible(false));
 
-        btnDefaults.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-
-            }
+        btnDefaults.addActionListener(e -> {
         });
     }
 }
