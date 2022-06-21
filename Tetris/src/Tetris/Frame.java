@@ -24,7 +24,6 @@ public class Frame extends JFrame {
     final JRadioButtonMenuItem volume100;
 
     private static final long serialVersionUID = 1L;
-    private final MusicController musicController = MusicController.getMusicController();
 
     public Frame() {
         try {
@@ -61,7 +60,7 @@ public class Frame extends JFrame {
 
         // Default music theme
         aTheme.setSelected(true);
-        musicController.playThemeA();
+        MusicController.playThemeA();
 
         volume0 = new JRadioButtonMenuItem("0%");
         volume20 = new JRadioButtonMenuItem("20%");
@@ -112,7 +111,7 @@ public class Frame extends JFrame {
             aTheme.setSelected(true);
             bTheme.setSelected(false);
             cTheme.setSelected(false);
-            musicController.playThemeA();
+            MusicController.playThemeA();
             SoundController.playTurn();
         });
 
@@ -120,7 +119,7 @@ public class Frame extends JFrame {
             aTheme.setSelected(false);
             bTheme.setSelected(true);
             cTheme.setSelected(false);
-            musicController.playThemeB();
+            MusicController.playThemeB();
             SoundController.playTurn();
         });
 
@@ -128,7 +127,7 @@ public class Frame extends JFrame {
             aTheme.setSelected(false);
             bTheme.setSelected(false);
             cTheme.setSelected(true);
-            musicController.playThemeC();
+            MusicController.playThemeC();
             SoundController.playTurn();
         });
 
@@ -182,7 +181,7 @@ public class Frame extends JFrame {
 
         newGameMenuItem.addActionListener((ActionEvent e) -> {
             SoundController.playTurn();
-            musicController.play();
+            MusicController.play();
             tetrisPanel.lose = false;
             board.clearBoard();
             board.startGame();
@@ -242,12 +241,12 @@ public class Frame extends JFrame {
     }
 
     public void setVolumeFromMenu(double val) {
+        volume0.setSelected(false);
+        volume20.setSelected(false);
         volume40.setSelected(false);
         volume60.setSelected(false);
         volume80.setSelected(false);
-        volume20.setSelected(false);
         volume100.setSelected(false);
-        volume0.setSelected(false);
         TinySound.setGlobalVolume(val);
     }
 

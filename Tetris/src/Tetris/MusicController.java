@@ -3,53 +3,42 @@ package Tetris;
 import kuusisto.tinysound.Music;
 import kuusisto.tinysound.TinySound;
 
-public class MusicController {
+public final class MusicController {
     private static final Music themeA = TinySound.loadMusic("sounds/themeA.wav");
     private static final Music themeB = TinySound.loadMusic("sounds/themeB.wav");
     private static final Music themeC = TinySound.loadMusic("sounds/themeC.wav");
-    private static MusicController musicController;
-    private Music current;
-    private boolean isPlaying = false;
+    private static Music currentMusic;
+    private static boolean isPlaying = false;
 
-    private MusicController() {
-    }
-
-    public static MusicController getMusicController() {
-        if (musicController == null) {
-            musicController = new MusicController();
-        }
-        return musicController;
-    }
-
-    public void playThemeA() {
+    public static void playThemeA() {
         stop();
-        current = themeA;
+        currentMusic = themeA;
         play();
     }
 
-    public void playThemeB() {
+    public static void playThemeB() {
         stop();
-        current = themeB;
+        currentMusic = themeB;
         play();
     }
 
-    public void playThemeC() {
+    public static void playThemeC() {
         stop();
-        current = themeC;
+        currentMusic = themeC;
         play();
     }
 
-    public void stop() {
+    public static void stop() {
         if (isPlaying) {
             isPlaying = false;
-            current.stop();
+            currentMusic.stop();
         }
     }
 
-    public void play() {
-        if (!isPlaying && current != null) {
+    public static void play() {
+        if (!isPlaying && currentMusic != null) {
             isPlaying = true;
-            current.play(true);
+            currentMusic.play(true);
         }
     }
 }
