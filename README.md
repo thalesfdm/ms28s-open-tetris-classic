@@ -1,10 +1,10 @@
 # Open TetrisClassic
 
-Modernization and improvements of OpenTetris Classic using Java programming language
+Modernization and improvements of OpenTetris Classic using Java programming language.
 
 ## About
 
-### This is a project developed during the Software Maintenance subject on UTFPR Software Engineering course. The original base project can be found in: https://sourceforge.net/projects/opentetrisclassic/
+#### This is a project developed during the Software Maintenance subject on UTFPR Software Engineering undergraduate course. The original base project can be found in: https://sourceforge.net/projects/opentetrisclassic/
 
 ---
 
