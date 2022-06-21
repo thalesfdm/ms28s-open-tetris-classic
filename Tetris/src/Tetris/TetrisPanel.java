@@ -19,16 +19,12 @@ import javax.swing.JPanel;
 import Tetris.Shape.Tetrominoes;
 
 public class TetrisPanel extends JPanel implements Runnable {
-
     public Thread thread = new Thread(this);
     public static Image bg;
     public static Image go;
     public static Image ps;
     public static Image we;
     public static Image[] box;
-    public static Music aTheme;
-    public static Music bTheme;
-    public static Music cTheme;
     public static Sound turn, move, drop, line, go1, go2, linefour, newlevel;
     public static int delay;
     public static boolean losing = false;
@@ -69,10 +65,6 @@ public class TetrisPanel extends JPanel implements Runnable {
         go2 = TinySound.loadSound("sounds/gamemover2.wav");
         linefour = TinySound.loadSound("sounds/4lineclear.wav");
         newlevel = TinySound.loadSound("sounds/newlevel.wav");
-        aTheme = TinySound.loadMusic("sounds/themeA.wav");
-        bTheme = TinySound.loadMusic("sounds/themeB.wav");
-        cTheme = TinySound.loadMusic("sounds/themeC.wav");
-        aTheme.play(true);
         TinySound.setGlobalVolume(0.6);
 
         try {

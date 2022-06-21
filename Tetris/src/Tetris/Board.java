@@ -32,7 +32,9 @@ public class Board extends JPanel implements ActionListener {
     public int level = 0;
     public int score = 0;
     public boolean first = false;
+
     private static final long serialVersionUID = 1L;
+    private final MusicController musicController = MusicController.getMusicController();
 
     public Board() {
         setBounds(80, 50, 400, 720);
@@ -125,6 +127,8 @@ public class Board extends JPanel implements ActionListener {
         if (isPaused) {
             return;
         }
+
+        musicController.play();
 
         resetPanel();
         first = true;
@@ -248,14 +252,8 @@ public class Board extends JPanel implements ActionListener {
         curPiece.setShape(Tetrominoes.NoShape);
         timer.stop();
         isStarted = false;
-        stopThemeMusic();
+        musicController.stop();
         Frame.tetrisPanel.lose();
-    }
-
-    private void stopThemeMusic() {
-        TetrisPanel.aTheme.stop();
-        TetrisPanel.bTheme.stop();
-        TetrisPanel.cTheme.stop();
     }
 
     private boolean tryMove(Shape newPiece, int newX, int newY) {

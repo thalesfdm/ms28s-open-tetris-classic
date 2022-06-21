@@ -12,7 +12,6 @@ import javax.swing.*;
 import kuusisto.tinysound.TinySound;
 
 public class Frame extends JFrame {
-    private static final long serialVersionUID = 1L;
     public static TetrisPanel tetrisPanel = new TetrisPanel();
     public static Image icon;
     public static Board board = new Board();
@@ -23,6 +22,9 @@ public class Frame extends JFrame {
     final JRadioButtonMenuItem volume60;
     final JRadioButtonMenuItem volume80;
     final JRadioButtonMenuItem volume100;
+
+    private static final long serialVersionUID = 1L;
+    private final MusicController musicController = MusicController.getMusicController();
 
     public Frame() {
         try {
@@ -54,10 +56,12 @@ public class Frame extends JFrame {
         sounds.add(volume);
 
         aTheme = new JRadioButtonMenuItem("A Theme");
-        aTheme.setSelected(true);
-
         bTheme = new JRadioButtonMenuItem("B Theme");
         cTheme = new JRadioButtonMenuItem("C Theme");
+
+        // Default music theme
+        aTheme.setSelected(true);
+        musicController.playThemeA();
 
         volume0 = new JRadioButtonMenuItem("0%");
         volume20 = new JRadioButtonMenuItem("20%");
@@ -66,6 +70,7 @@ public class Frame extends JFrame {
         volume80 = new JRadioButtonMenuItem("80%");
         volume100 = new JRadioButtonMenuItem("100%");
 
+        // Default volume
         volume60.setSelected(true);
 
         music.add(aTheme);
@@ -104,22 +109,18 @@ public class Frame extends JFrame {
         });
 
         aTheme.addActionListener((ActionEvent e) -> {
+            aTheme.setSelected(true);
             bTheme.setSelected(false);
             cTheme.setSelected(false);
-            aTheme.setSelected(true);
-            TetrisPanel.bTheme.stop();
-            TetrisPanel.cTheme.stop();
-            TetrisPanel.aTheme.play(true);
+            musicController.playThemeA();
             TetrisPanel.turn.play();
         });
 
         bTheme.addActionListener((ActionEvent e) -> {
             aTheme.setSelected(false);
-            cTheme.setSelected(false);
             bTheme.setSelected(true);
-            TetrisPanel.aTheme.stop();
-            TetrisPanel.cTheme.stop();
-            TetrisPanel.bTheme.play(true);
+            cTheme.setSelected(false);
+            musicController.playThemeB();
             TetrisPanel.turn.play();
         });
 
@@ -127,9 +128,7 @@ public class Frame extends JFrame {
             aTheme.setSelected(false);
             bTheme.setSelected(false);
             cTheme.setSelected(true);
-            TetrisPanel.aTheme.stop();
-            TetrisPanel.bTheme.stop();
-            TetrisPanel.cTheme.play(true);
+            musicController.playThemeC();
             TetrisPanel.turn.play();
         });
 
@@ -183,19 +182,8 @@ public class Frame extends JFrame {
 
         newGameMenuItem.addActionListener((ActionEvent e) -> {
             TetrisPanel.turn.play();
-
-            if (aTheme.isSelected()) {
-                TetrisPanel.aTheme.play(true);
-            }
-            if (bTheme.isSelected()) {
-                TetrisPanel.bTheme.play(true);
-            }
-            if (cTheme.isSelected()) {
-                TetrisPanel.cTheme.play(true);
-            }
-
+            musicController.play();
             tetrisPanel.lose = false;
-
             board.clearBoard();
             board.startGame();
         });
@@ -229,7 +217,6 @@ public class Frame extends JFrame {
 
             @Override
             public void keyPressed(KeyEvent e) {
-//                tetrisPanel.keyboardEvent(e);
                 board.keyPressed(e);
             }
 
@@ -239,9 +226,19 @@ public class Frame extends JFrame {
         });
 
         aboutMenuItem.addActionListener((ActionEvent e) -> {
-            JOptionPane.showMessageDialog(this, "OpenTetris Classic v1.0-dev 08/10/2021\n\nA full open-source recreation of the 1989 hit game.\n\nOriginally developed by Kyle Bredenkamp.\n\nRefactored and improved by:\nPedro G. K. Bertella\nJailson L. Panizzon\nArthur R. P. So.\n\nGitHub\nhttps://github.com/pedrobertella/OpenTetrisClassic\n", "About OpenTetris Classic", JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(
+                    this,
+                    "OpenTetris Classic v1.0-dev 08/10/2021\n\n" +
+                            "A full open-source recreation of the 1989 hit game.\n\n" +
+                            "Originally developed by Kyle Bredenkamp.\n\n" +
+                            "Refactored and improved by:\nPedro G. K. Bertella\nJailson L. Panizzon\nArthur R. P. So.\n\n" +
+                            "GitHub:\nhttps://github.com/pedrobertella/OpenTetrisClassic\n\n" +
+                            "Refactored and improved (again) by:\nThales F. Dal Molim\nJose O. Bremm\nLuis V. da S. S. Dutra.\n\n" +
+                            "GitHub:\nhttps://github.com/thalesfdm/ms28s-open-tetris-classic\n",
+                    "About OpenTetris Classic",
+                    JOptionPane.INFORMATION_MESSAGE
+            );
         });
-
     }
 
     public void setVolumeFromMenu(double val) {
@@ -255,11 +252,7 @@ public class Frame extends JFrame {
     }
 
     public static void main(String[] args) {
-
         Frame frame = new Frame();
-
         frame.setVisible(true);
-
     }
-
 }
