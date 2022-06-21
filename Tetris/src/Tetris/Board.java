@@ -1,5 +1,7 @@
 package Tetris;
 
+import Tetris.Shape.Tetrominoes;
+
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Image;
@@ -8,29 +10,29 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 
 import javax.swing.ImageIcon;
-import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.Timer;
 
-import Tetris.Shape.Tetrominoes;
-
 public class Board extends JPanel implements ActionListener {
-    final int BoardWidth = 10;
+	final int BoardWidth = 10;
     final int BoardHeight = 18;
-    public Image[] box = new Image[8];
     Timer timer;
+    Shape curPiece;
+    Shape nextPiece;
+    Tetrominoes[] board;
     boolean isFallingFinished = false;
     boolean isStarted = false;
     boolean isPaused = false;
-    int numLinesRemoved = 0, linesTillNext = 10, linesComp = 0;
+    int numLinesRemoved = 0;
+    int linesTillNext = 10;
+    int linesComp = 0;
     int curX = 0;
     int curY = 0;
+    public Image[] box = new Image[8];
     public int level = 0;
     public int score = 0;
-    JLabel statusbar;
-    Shape curPiece, nextPiece;
-    Tetrominoes[] board;
     public boolean first = false;
+    private static final long serialVersionUID = 1L;
 
     public Board() {
         setBounds(80, 50, 400, 720);
@@ -172,7 +174,6 @@ public class Board extends JPanel implements ActionListener {
                     drawSquare(g, j * squareWidth() + 75,
                             boardTop + i * squareHeight(), shape);
                 }
-
             }
         }
 
@@ -295,9 +296,7 @@ public class Board extends JPanel implements ActionListener {
                 //Blink
                 for (int k = i; k < BoardHeight - 1; ++k) {
                     for (int j = 0; j < BoardWidth; ++j) {
-
                         board[(k * BoardWidth) + j] = shapeAt(j, k + 1);
-
                     }
                 }
 
